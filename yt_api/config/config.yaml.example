@@ -1,0 +1,13 @@
+---
+sleep_seconds: 600
+
+target_playlist_id: ''
+
+source_playlist_names:
+  - '@Mammoth_Club'
+  - '@DFBGuide'
+  - '@TPMvids'
+  - 'AllEarsNet'
+  - 'MickeyViews'
+  - 'touringplans'
+  - 'TheTimTracker'
