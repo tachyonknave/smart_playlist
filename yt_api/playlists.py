@@ -1,4 +1,5 @@
 import logging
+from googleapiclient.errors import HttpError
 
 
 def read_playlist_response(pl_response):
@@ -19,15 +20,16 @@ def add_video_to_playlist(yt_service, playlist_id, video_id):
         body={
             "snippet": {
                 "playlistId": playlist_id,
-                "resourceId": video_id,
-                "position": 0
+                "resourceId": video_id
             }
         }
     )
 
-    response = request.execute()
-
-    # TODO check response for error
+    try:
+        response = request.execute()
+    except HttpError as he:
+        logging.error(he)
+        quit()
 
 
 def get_playlist_item_ids_from_response(list_response):
@@ -136,3 +138,15 @@ def get_all_playlists(channel_id, youtube_service):
         request = youtube_service.playlists().list_next(request, response)
 
     return playlists
+
+
+def get_playlist_info(youtube_service, playlist_id):
+    request = youtube_service.playlists().list(
+        id=playlist_id,
+        part='snippet,contentDetails,id, localizations,player,status',
+        maxResults=15
+    )
+    response = request.execute()
+
+    return response['items'][0]
+
