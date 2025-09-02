@@ -1,6 +1,7 @@
 from time import sleep
 
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 from yt_api.channel_videos import get_channel_videos
 from yt_api.config import Config
@@ -46,7 +47,15 @@ if __name__ == '__main__':
 
     sleep_time = config.get_sleep_time()
 
-    while True:
-        update_playlist(config)
+    error_count = 0
+    MAX_ERROR_COUNT = 5
+
+    while error_count < MAX_ERROR_COUNT:
+        try:
+            update_playlist(config)
+        except HttpError as ghe:
+            error_count = error_count + 1
+            logging.error(ghe.error_details)
+
         logging.info("Sleeping...")
         sleep(sleep_time)
