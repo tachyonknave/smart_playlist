@@ -3,10 +3,10 @@ from time import sleep
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from yt_api.channel_videos import get_channel_videos
-from yt_api.config import Config
-from yt_api.credentials import get_credentials
-from yt_api.playlists import add_video_to_playlist, get_videos_in_playlist
+from channel_videos import get_channel_videos
+from config import Config
+from credentials import get_credentials
+from playlists import add_video_to_playlist, get_videos_in_playlist
 
 import logging
 

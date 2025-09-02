@@ -1,4 +1,4 @@
-from yt_api.model.video_item import VideoItem
+from model.video_item import VideoItem
 
 
 def get_channel_videos(youtube_service, channel_name=""):
