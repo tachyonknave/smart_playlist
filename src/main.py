@@ -10,6 +10,10 @@ from playlists import add_video_to_playlist, get_videos_in_playlist
 
 import logging
 
+def print_video_add(text:str):
+    white = "\x1b[37;20m"
+    reset = "\x1b[0m"
+    logging.info(f"Adding video: {white} {text} {reset}")
 
 def update_playlist(playlist_config):
     credentials = get_credentials()
@@ -33,7 +37,7 @@ def update_playlist(playlist_config):
     for vid in sorted_videos:
         video_resource_id = vid.resourceId['videoId']
         if video_resource_id not in added_videos:
-            logging.info(f"Adding video: {vid.title}")
+            print_video_add(vid.title)
             add_video_to_playlist(youtube_service, target_playlist_id, vid.resourceId)
             added_videos.append(video_resource_id)
     logging.info("Done adding videos")
