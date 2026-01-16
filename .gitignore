@@ -1,1 +1,8 @@
 /venv/
+.idea/
+src/*.json
+src/*.pickle
+src/__pycache/
+src/model/__pycache/
+src/config/config.yaml
+
