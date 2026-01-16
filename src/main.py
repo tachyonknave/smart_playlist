@@ -20,6 +20,7 @@ def update_playlist(playlist_config):
 
     youtube_service = build('youtube', 'v3', credentials=credentials, cache_discovery=False)
 
+    logging.info("Getting channel list...")
     channel_list = playlist_config.get_channel_list()
 
     all_videos = []
