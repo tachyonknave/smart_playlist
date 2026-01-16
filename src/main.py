@@ -10,11 +10,13 @@ from playlists import add_video_to_playlist, get_videos_in_playlist
 
 import logging
 
+logger = logging.getLogger(__name__)
+
 
 def print_video_add(text: str):
     white = "\x1b[37;20m"
     reset = "\x1b[0m"
-    logging.info(f"Adding video: {white} {text} {reset}")
+    logger.info(f"Adding video: {white} {text} {reset}")
 
 
 def update_playlist(playlist_config):
@@ -24,12 +26,13 @@ def update_playlist(playlist_config):
         "youtube", "v3", credentials=credentials, cache_discovery=False
     )
 
-    logging.info("Getting channel list...")
+    logger.info("Getting channel list...")
     channel_list = playlist_config.get_channel_list()
 
     all_videos = []
 
     for channel in channel_list:
+        logger.info(f"Fetching videos from channel: {channel}")
         all_videos.extend(get_channel_videos(youtube_service, channel))
 
     target_playlist_id = playlist_config.get_target_playlist()
@@ -45,7 +48,7 @@ def update_playlist(playlist_config):
             print_video_add(vid.title)
             add_video_to_playlist(youtube_service, target_playlist_id, vid.resourceId)
             added_videos.append(video_resource_id)
-    logging.info("Done adding videos")
+    logger.info("Done adding videos")
 
 
 if __name__ == "__main__":
@@ -66,5 +69,5 @@ if __name__ == "__main__":
             error_count = error_count + 1
             logging.error(ghe.error_details)
 
-        logging.info("Sleeping...")
+        logger.info("Sleeping...")
         sleep(sleep_time)

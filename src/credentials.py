@@ -6,6 +6,8 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.exceptions import RefreshError
 
+logger = logging.getLogger(__name__)
+
 
 def should_get_new_token(credentials):
     should = False
@@ -55,7 +57,7 @@ def get_credentials(
     credentials = None
 
     if os.path.exists(pickle_file):
-        logging.info("Loading credentials from file...")
+        logger.info("Loading credentials from file...")
         with open(pickle_file, "rb") as token:
             credentials = pickle.load(token)
 
@@ -64,7 +66,7 @@ def get_credentials(
         # Refresh or get new token
         if should_get_new_token(credentials):
             if creds_can_be_refreshed(credentials):
-                logging.info("Refreshing token...")
+                logger.info("Refreshing token...")
                 try:
                     credentials.refresh(Request())
                 except RefreshError as re:
@@ -73,10 +75,10 @@ def get_credentials(
                 credentials = get_new_token(client_secrets_file)
 
         if credentials and credentials.valid:
-            logging.debug(f"Token expiration: {credentials.expiry}")
-            logging.info("Saving new token...")
+            logger.debug(f"Token expiration: {credentials.expiry}")
+            logger.info("Saving new token...")
             with open(pickle_file, "wb") as token:
-                logging.info("Saving credentials...")
+                logger.info("Saving credentials...")
                 pickle.dump(credentials, token)
 
     return credentials
