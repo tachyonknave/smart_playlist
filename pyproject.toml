@@ -6,3 +6,10 @@ authors = ["Kevin H <git@thehollywoods.net>"]
 readme = "README.md"
 requires-python = ">=3.11"
 packages = [{include = "yt_api"}]
+dependencies = [
+    "cachetools==6.2.4",
+    "google-api-core==2.29.0",
+    "google-api-python-client==2.188.0",
+    "google-auth-oauthlib==1.2.4",
+    "pyyaml==6.0.3",
+]

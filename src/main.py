@@ -18,8 +18,9 @@ def print_video_add(text:str):
 def update_playlist(playlist_config):
     credentials = get_credentials()
 
-    youtube_service = build('youtube', 'v3', credentials=credentials)
+    youtube_service = build('youtube', 'v3', credentials=credentials, cache_discovery=False)
 
+    logging.info("Getting channel list...")
     channel_list = playlist_config.get_channel_list()
 
     all_videos = []
