@@ -10,15 +10,19 @@ from playlists import add_video_to_playlist, get_videos_in_playlist
 
 import logging
 
-def print_video_add(text:str):
+
+def print_video_add(text: str):
     white = "\x1b[37;20m"
     reset = "\x1b[0m"
     logging.info(f"Adding video: {white} {text} {reset}")
 
+
 def update_playlist(playlist_config):
     credentials = get_credentials()
 
-    youtube_service = build('youtube', 'v3', credentials=credentials, cache_discovery=False)
+    youtube_service = build(
+        "youtube", "v3", credentials=credentials, cache_discovery=False
+    )
 
     logging.info("Getting channel list...")
     channel_list = playlist_config.get_channel_list()
@@ -36,7 +40,7 @@ def update_playlist(playlist_config):
 
     added_videos = playlist_video_ids.copy()
     for vid in sorted_videos:
-        video_resource_id = vid.resourceId['videoId']
+        video_resource_id = vid.resourceId["videoId"]
         if video_resource_id not in added_videos:
             print_video_add(vid.title)
             add_video_to_playlist(youtube_service, target_playlist_id, vid.resourceId)
@@ -44,7 +48,7 @@ def update_playlist(playlist_config):
     logging.info("Done adding videos")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
     config = Config()
