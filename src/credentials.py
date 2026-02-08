@@ -83,7 +83,6 @@ def get_credentials(
     # Persist valid credentials to pickle for next run
     if credentials and credentials.valid:
         logger.debug(f"Token expiration: {credentials.expiry}")
-        logger.info("Saving new token...")
         with open(pickle_file, "wb") as token:
             logger.info("Saving credentials...")
             pickle.dump(credentials, token)
